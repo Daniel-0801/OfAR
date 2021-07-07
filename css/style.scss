@@ -1,0 +1,524 @@
+$color-buy: #1C68B3;
+$color-sell: #64B9BC;
+$color-rent: #51AEE2;
+$color-recruit: #B40101;
+$color-text: #4D4C4C;
+
+$layout-width-inner: 1000px;
+
+$breakpoints: (
+    "sp": "(max-width: 767px)",
+    "tab": "(min-width: 768px) and (max-width: #{$layout-width-inner})",
+    "pc": "(min-width: #{$layout-width-inner})" //768px以上（タブレット・PC）用の表示
+);
+//mediaQuery
+@mixin mq($breakpoint: sp) {
+    //map-get(マップ型変数, キー)で値を取得
+      @media #{map-get($breakpoints, $breakpoint)} {
+        //この中をカスタム
+        @content;
+      }
+    }
+
+// reset css
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font-family: "YuGothic", "游ゴシック体", "游ゴシック Medium", "Yu Gothic Medium", "游ゴシック", "Yu Gothic", sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    background: #fff;
+    color: $color-text;
+}
+
+ul, ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+img {
+   max-width: 100%;
+   height: auto;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+p {
+  letter-spacing: 1px;
+}
+
+.inner {
+  width: $layout-width-inner;
+  max-width: 100%;
+  margin: 0 auto;
+  @include mq("tab") {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  @include mq("sp") {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+.section {
+    padding: 130px 0 130px;
+    position: relative;
+    &::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: -15px;
+        display: inline-block;
+        width: 1200px;
+        max-width: 90%;
+        height: 1px;
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);/*位置調整*/
+        background-color: $color-text;
+    }
+  
+    @include mq("sp") {
+      padding-top: 50px;
+      padding-bottom: 60px; //だいたいPC時の半分ぐらいの幅
+    }
+  }
+
+//Header
+.header {
+  background-color: rgba( 255, 255, 255, .4);
+  height: 90px;
+  position: fixed;
+  width: 100%;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  @include mq("sp") {
+    height: 60px;
+  }
+}
+
+.drawer-icon {
+  position: fixed;
+  top: 30px;
+  right: 45px;
+  z-index: 500;
+  transition: transform 0.5s ease 0s;
+  @include mq("sp") {
+    display: block;
+  }
+
+  &.is-active {
+    .drawer-icon-bar1 {
+     transform: rotate(-45deg);
+     top: 8px;
+    }
+    .drawer-icon-bar2 {
+      display: none;
+    }
+    .drawer-icon-bar3 {
+      transform: rotate(45deg);
+      top: 8px;
+    }
+  }
+}
+
+.drawer-icon-bars {
+  width:  60px;
+  height: 40px;
+  display: block;
+  position: relative;
+}
+
+.drawer-icon-bar1,
+.drawer-icon-bar2,
+.drawer-icon-bar3 {
+  position: absolute;
+  width: 60px;
+  height: 5px;
+  top: 0;
+  left: 0;
+  background-color: rgba( 255, 255, 255, 1.0);
+  border-radius: 20px;
+}
+
+.drawer-icon-bar1 {
+  top: 0;
+}
+.drawer-icon-bar2 {
+  top: 15px;
+}
+.drawer-icon-bar3 {
+  top: 30px;
+}
+
+.drawer-content {
+  width: 350px;
+  position: fixed;
+  right: 0;
+  top: 90px;
+  background: #fff;
+  background-color: rgba( 255, 255, 255, .4);
+  z-index: 500;
+  transform: translateX(105%);
+  transition: transform 0.5s ease 0s;
+
+  &.is-active {
+    transform: translateX(0);
+  }
+}
+
+.drawer-content-item {
+  border-bottom: 1px solid #fff;
+  font-size: 24px;
+  a {
+    display: block;
+    color: #fff;
+    padding: 10px 40px;
+    text-decoration: none;
+  }
+  &:nth-child(4) {
+    border-bottom: none;
+  }
+}
+
+//main-visual
+.main-visual {
+    height: 740px;
+    width: 100%;
+    background: url(../img/top.jpg);
+    background-size: cover;
+    position: relative;
+
+    @include mq("sp") {
+        margin-top: 60px;
+        height: 420px;
+      }
+}
+
+.content {
+    position: absolute;
+    top: 45%;
+    left: 60%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 100%;
+
+    @include mq("tab") {
+        padding-left: 80px;
+        padding-right: 80px;
+      }
+      @include mq("sp") {
+        padding-left: 46px;
+        padding-right: 46px;
+      }
+}
+
+.main-logo {
+    img {
+        width: 400px;
+        max-width: 100%;
+    }
+}
+
+.main-title {
+    font-size: 42px;
+    color: #fff;
+    font-weight: 700;
+    line-height: 2;
+    padding-left: 30px;
+
+    @include mq("sp") {
+        font-size: 32px;
+      }
+}
+
+//About section
+.about-contents {
+    display: flex;
+
+    @include mq("sp") {
+      display: block;
+    }
+}
+
+.president {
+    width: 1480 / 1000 * 100%;
+    margin-right: 40px;
+    img {
+      height: 428px;
+      object-fit: cover;
+    }
+}
+
+.president-message {
+    width: 1700 / 1000 * 100%;
+    margin-left: 40px;
+}
+
+.section-title {
+    font-size: 20px;
+    color: $color-buy;
+    font-weight: 700;
+}
+
+.message {
+    margin-top: 20px;
+    line-height: 1.8;
+}
+
+.president-name {
+    text-align: right;
+    margin-top: 20px;
+}
+
+//Inquiry section
+.inquiry-title {
+  font-size: 20px;
+  color: $color-buy;
+  font-weight: 700;
+  text-align: center;
+}
+
+.button-items {
+  margin-top: 80px;
+  display: flex;
+  flex-wrap: wrap;
+  @include mq("sp") {
+    margin-top: 42px;
+   }
+
+  .button2 {
+    background-color: $color-sell;
+  }
+
+  .button3 {
+    background-color: $color-rent;
+  }
+}
+
+.button-item {
+  width: calc(33.3% - 25px * 2 / 3); //アイテムを三等分するので33.3% だが各アイテムの余白24pxがあるので-24pxそれが*2 それが3つあるので/3
+  // padding-right: 5px;
+  background: url(../img/realty1.jpg) no-repeat center center / contain;
+  padding: 160px 80px;
+  margin-bottom: 130px;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    right: 0;
+    left: 0;
+    bottom: 2px;
+    background-color: rgba(0,0,0,0.3); /*半透明のフィルターをかける*/
+  }
+
+  &:not(:nth-child( n + 3)) {
+    // padding-right: 30px;
+  }
+  
+  @include mq("pc") {
+    &:not(:nth-child(3n + 1)) {
+      margin-left: 24px;
+    }
+  }
+
+  @include mq("tab") {
+    width: calc(50% - 24px * 1 / 2);
+    &:not(:nth-child(2n + 1)) {
+      margin-left: 24px;
+    }
+    &:nth-child(n + 3) {
+      margin-top: 24px;
+    }
+  }
+
+  @include mq("sp") {
+    width: 100%;
+    margin-left: 0;
+    &:nth-child(n + 2) {
+      margin-top: 24px;
+    }
+  }
+}
+
+.button-bg {
+  position: absolute;
+  color: #fff;
+  width: 100%;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%,-50%);
+  -webkit-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+  margin:0;
+  padding:0;
+}
+
+.button-title {
+  font-size: 32px;
+  margin-bottom: 5px;
+}
+
+.subtitle {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.inquiry-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  max-width: 100%;
+  height: 35px;
+  text-decoration: none;
+  background-color: $color-buy;
+  border-radius: 100vh;
+  position: relative;
+  margin: 20px auto 0;
+  &:hover {
+    opacity: 0.8;
+    transition: .5s;
+  }
+}
+
+.company-items {
+  text-align: center;
+  img {
+    width: 250px;
+    max-width: 100%;
+    margin: 20px 0 0;
+  }
+}
+
+.company-about {
+  
+}
+
+//Recruit section
+
+.recruit-contents {
+  display: flex;
+
+  @include mq("sp") {
+    display: block;
+  }
+}
+
+.recruit-content {
+  width: 400px;
+  height: 384px;
+  padding: 0 125px;
+  margin-right: 40px;
+  background: url(../img/handshake.jpg) no-repeat center center / cover;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.3); /*半透明のフィルターをかける*/
+  }
+}
+
+.inquiry-message {
+  width: calc(100% - 400px);
+  margin-left: 40px;
+}
+
+.button4 {
+  background-color: $color-recruit;
+}
+
+//Profile section
+.profile-contents {
+  display: flex;
+
+  @include mq("sp") {
+    display: block;
+  }
+}
+
+.profile-logo {
+  width: 400 / 1000 * 100%;
+  margin-right: 150px;
+  position: relative;
+  img {
+    position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  }
+}
+
+.profile-content {
+  width: (126 + 460) / 1000 * 100%;
+}
+
+.company-title {
+    margin-bottom: 30px;
+}
+
+.profile-items {
+  display: flex;
+  line-height: 1.7;
+  &:first-child {
+    margin-top: 30px;
+  }
+}
+
+.profile-meta {
+  width: 126px;
+  margin-right: 25px;
+}
+
+.profile-text {
+}
+
+//footer
+.footer {
+  width: 100%;
+  height: 170px;
+  background-color: $color-buy;
+  color: #fff;
+  position: relative;
+}
+
+.footer-copy {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: 100%;
+}
